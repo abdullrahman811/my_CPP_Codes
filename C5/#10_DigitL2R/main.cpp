@@ -7,7 +7,7 @@ int readPositiveNumber(string message)
 
     do
     {
-        cout << "Please Enter Positive Number: ";
+        cout << message << endl;
         cin >> num;
     } while (num <= 0);
 
