@@ -30,9 +30,9 @@ enPrimNotPrime CheckPrime(int Number)
 
     int M = round(Number / 2);
 
-    for (int Counter = 2; Counter <= M; Counter++)
+    for (int i = 2; i <= M; i++)
     {
-        if (Number % Counter == 0)
+        if (Number % i == 0)
             return enPrimNotPrime::NotPrime;
     }
 
