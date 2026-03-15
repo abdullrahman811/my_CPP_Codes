@@ -12,9 +12,12 @@ string getPassword()
 	return pass;
 }
 
-void printLettersFromAAAtoZZZ(string password)
+void guessPassword(string password)
 {
 	string testPass = "   ";
+
+	int counter = 0;
+
 	for (int i = 'A'; i <= 'Z'; i++)
 	{
 		for (int j = 'A'; j <= 'Z'; j++)
@@ -25,9 +28,12 @@ void printLettersFromAAAtoZZZ(string password)
 				testPass[1] = char(j);
 				testPass[2] = char(k);
 
+				counter ++;
+
 				if (testPass == password)
 				{
-					cout << "\nPassword Found! it is " << testPass << endl;	
+					cout << "\nPassword Found! it is " << testPass << endl;
+					cout << "Found After " << counter << " Trials.";	
 					return ;
 				}
 
@@ -39,7 +45,7 @@ void printLettersFromAAAtoZZZ(string password)
 
 int main() {
 
-	printLettersFromAAAtoZZZ(getPassword());
+	guessPassword(getPassword());
 
     return 0;
 }
