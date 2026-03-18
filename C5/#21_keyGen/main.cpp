@@ -53,15 +53,23 @@ char randomChar(enRandomType type) {
   return '\0';
 }
 
-string genKey() {
+string genWord(enRandomType type, short length) {
+  string word = "";
+
+  for (int i = 1; i <= length; i++) {
+    word += randomChar(type);
+  }
+
+  return word;
+}
+
+string genKeyWord4(enRandomType type, short wordNum) {
   string key = "";
 
-  for (int i = 1; i <= 4; i++) {
-    for (int j = 1; j <= 4; j++) {
-      key += randomChar(capitalLetter);
-    }
+  for (int i = 1; i <= wordNum; i++) {
+    key += genWord(type, 4);
 
-    if (key.length() <= 16) {
+    if (i < wordNum) {
       key += '-';
     }
   }
@@ -71,7 +79,7 @@ string genKey() {
 
 void keysGen(int numOfKeys) {
   for (int i = 1; i <= numOfKeys; i++) {
-    cout << "\nKey [" << i << "]: " << genKey();
+    cout << "\nKey [" << i << "]: " << genKeyWord4(capitalLetter, 4);
   }
 }
 
