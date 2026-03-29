@@ -36,27 +36,20 @@ bool readBool(string message)
     return boolean;
 }
 
-/*void readArray(int array[100], int arraySize)
+void addArrayElement(int array[100], int &arraySize, int numToAdd)
 {
-    for (int i = 0; i < arraySize; i++)
-    {
-        cout << "\n Element [" << i + 1 << "]: ";
-        cin >> array[i];
-    }
-}*/
+    arraySize++;
+    array[arraySize - 1] = numToAdd;
+}
 
 void semiDynamicArraySize(int array[100], int &arraySize)
 {
-    int counter = 0;
     bool check = 0;
     do
     {
-        counter++;
-        array[counter - 1] = readNumber("\nPlease Enter Number: ");
+        addArrayElement(array, arraySize, readNumber("\nPlease Enter Number: "));
         check = readBool("Do You Want To Add More Numbers? (0 For No, 1 For Yes) : ");
     } while (check);
-    
-    arraySize = counter;
 }
 
 void printArray(int array[100], int arraySize)
