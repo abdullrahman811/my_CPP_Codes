@@ -14,12 +14,6 @@ int readPositiveNumber(string message)
   return num;
 }
 
-void addArrayElement(int array[100], int &arraySize, int numToAdd)
-{
-  arraySize++;
-  array[arraySize - 1] = numToAdd;
-}
-
 int randomNumber(int From, int To) {
   int randNum = rand() % (To - From + 1) + From;
   return randNum;
