@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int readnegativeNumber(string message) 
+int readPositiveNumber(string message) 
 {   
   int num = 0;   
   do   
@@ -21,7 +21,7 @@ int randomNumber(int From, int To) {
 
 void randomArray(int array[100], int &arraySize)
 { 
-  arraySize = readnegativeNumber("\nEnter Array Elements Number: ");    
+  arraySize = readPositiveNumber("\nEnter Array Elements Number: ");    
 
   for (int i = 0; i < arraySize; i++)  
   {     
