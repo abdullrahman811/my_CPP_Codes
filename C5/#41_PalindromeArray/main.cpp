@@ -5,13 +5,13 @@ using namespace std;
 
 void hardCodedArray(int array[100], int &arraySize)
 {
-  arraySize = 6;
+  arraySize = 5;
   array[0] = 10;
   array[1] = 20;
   array[2] = 30;
-  array[3] = 30;
-  array[4] = 20;
-  array[5] = 10;
+  array[3] = 20;
+  array[4] = 10;
+  //array[5] = 10;
 }
 
 void printArray(int array[100], int arraySize)
@@ -24,7 +24,7 @@ void printArray(int array[100], int arraySize)
 
 bool isPalindromeArray(int arr1[100], int arr1Size)
 {
-  for (int i = 0; i < arr1Size; i++)
+  for (int i = 0; i < arr1Size / 2; i++)
   {
     if (arr1[i] != arr1[arr1Size - 1 - i])
     {
