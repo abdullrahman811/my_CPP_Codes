@@ -68,7 +68,8 @@ void maestro()
 }
 
 int main() 
-{   
+{
+  srand((unsigned)time(NULL));
   maestro();   
   return 0;
 }
