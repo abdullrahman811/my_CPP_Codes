@@ -175,10 +175,8 @@ stGameStatus roundToGame(stRoundInfo round, stGameStatus game)
   return game;
 }
 
-char printGameResults(stGameStatus game)
+void whoWonTheGame(stGameStatus &game)
 {
-  char again = ' ';
-
   if (game.wins > game.losses)
   {
     game.finalWinner = "Player";
@@ -193,6 +191,11 @@ char printGameResults(stGameStatus game)
   {
     game.finalWinner = "No One";
   }
+}
+
+void printGameResults(stGameStatus game)
+{
+  whoWonTheGame(game);
 
   cout << "\n\n\n\t\t_____________________________________________"
        << "\n\t\t\t   +++ G a m e  O v e r +++\t\t"
@@ -203,11 +206,16 @@ char printGameResults(stGameStatus game)
        << "\n\t\tLosses      : " << game.losses
        << "\n\t\tDraws       : " << game.draws
        << "\n\t\tFinal Winner: " << game.finalWinner
-       << "\n\t\t_____________________________________________"
-       << "\n\t\tDo you want to play again? Y/N: ";
+       << "\n\t\t_____________________________________________";
+}
 
-  cin >> again;
-  return again;  
+void resetScreen()
+{
+  #ifdef _WIN32
+    system("cls");
+  #else
+    system("clear");
+  #endif
 }
 
 void startGame()
@@ -216,12 +224,12 @@ void startGame()
   
   do
   {
+  resetScreen();
     
   stRoundInfo round;
   stGameStatus game;
 
   game.totalRounds = readRounds();
-
 
   for (int i = 1; i <= game.totalRounds; i++)
   {
@@ -235,8 +243,11 @@ void startGame()
 
   }
 
-  playAgain = printGameResults(game);
+  printGameResults(game);
   
+  cout << "\n\t\tDo you want to play again? Y/N: ";
+  cin >> playAgain;
+
   } while(playAgain == 'y' || playAgain == 'Y');
 }
 
