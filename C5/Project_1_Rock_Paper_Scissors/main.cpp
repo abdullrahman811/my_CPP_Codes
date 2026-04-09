@@ -9,6 +9,16 @@ enum enChoices     { rock = 1, paper = 2, scissor = 3 };
 enum enRoundStatus { win = 1 , draw = 2 , loss = 3 };
 
 
+// Structs
+struct stRoundInfo
+{
+  short roundNumber;
+  enChoices playerChoice;
+  enChoices computerChoice;
+  enRoundStatus status;
+};
+
+
 // Functions And Procedures
 short readRounds()
 {
@@ -42,48 +52,49 @@ enChoices randomChoice()
   return static_cast<enChoices>(ranNum);
 }
 
-enRoundStatus roundStart(enChoices &userChoice, enChoices &computerChoice)
+stRoundInfo roundStart(stRoundInfo info)
 {
-  userChoice = readChoice();
 
-  computerChoice = randomChoice();
+  info.playerChoice = readChoice();
 
-  if (userChoice == computerChoice)
+  info.computerChoice = randomChoice();
+
+  if (info.playerChoice == info.computerChoice)
   {
-    return draw;
+    info.status = draw;
   }
 
   // Rock Possibilities
-  else if (userChoice == rock && computerChoice == paper)
+  else if (info.playerChoice == rock && info.computerChoice == paper)
   {
-    return loss;
+    info.status = loss;
   }
-  else if (userChoice == rock && computerChoice == scissor)
+  else if (info.playerChoice == rock && info.computerChoice == scissor)
   {
-    return win;
+    info.status = win;
   }
 
   // Paper Possibilities  
-  else if (userChoice == paper && computerChoice == rock)
+  else if (info.playerChoice == paper && info.computerChoice == rock)
   {
-    return win;
+    info.status = win;
   }
-  else if (userChoice == paper && computerChoice == scissor)
+  else if (info.playerChoice == paper && info.computerChoice == scissor)
   {
-    return loss;
+    info.status = loss;
   }
   
   // Scissors Possibilities
-  else if (userChoice == scissor && computerChoice == rock)
+  else if (info.playerChoice == scissor && info.computerChoice == rock)
   {
-    return loss;
+    info.status = loss;
   }
-  else if (userChoice == scissor && computerChoice == paper)
+  else if (info.playerChoice == scissor && info.computerChoice == paper)
   {
-    return win;
+    info.status = win;
   }
 
-  return draw;
+  return info;
 }
 
 string choicesToString(enChoices choice)
@@ -130,15 +141,15 @@ string statusToString(enRoundStatus status)
   }
 }
 
-void printRoundStatus(enChoices user, enChoices computer, enRoundStatus status)
+void printRoundStatus(stRoundInfo info)
 {
   // Colors
-  if (status == draw)
+  if (info.status == draw)
   {
     cout << "\033[33m";
   }
 
-  else if (status == loss)
+  else if (info.status == loss)
   {
     cout << "\033[31m";
   }
@@ -148,9 +159,9 @@ void printRoundStatus(enChoices user, enChoices computer, enRoundStatus status)
     cout << "\033[32m";
   }
 
-  cout << "\n\tPlayer  Choice : " << choicesToString(user)
-       << "\n\tComputer Choice: " << choicesToString(computer)
-       << "\n\tRound Winner : " << statusToString(status)
+  cout << "\n\tPlayer  Choice : " << choicesToString(info.playerChoice)
+       << "\n\tComputer Choice: " << choicesToString(info.computerChoice)
+       << "\n\tRound Winner : " << statusToString(info.status)
        << "\033[0m"; // Reset Color
 }
 
@@ -216,17 +227,20 @@ void startGame()
   short rounds = readRounds();
   char playAgain = ' ';
 
-  enChoices user, computer;
-  
+  //enChoices user, computer;
+  stRoundInfo info;
+
   for (int i = 1; i <= rounds; i++)
   {
     cout << "\n\nRound [" << i << "] begins: \n";
     
-    roundsResults[i - 1] = roundStart(user, computer);
+    info = roundStart(info);
+
+    roundsResults[i - 1] = info.status;
 
     cout << "\n\t_______________Round [" << i << "]_______________";
 
-    printRoundStatus(user, computer, static_cast<enRoundStatus>(roundsResults[i - 1]));
+    printRoundStatus(info);
 
     cout << "\n\t______________________________________";
   }
