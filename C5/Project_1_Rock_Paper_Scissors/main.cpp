@@ -12,12 +12,20 @@ enum enRoundStatus { win = 1 , draw = 2 , loss = 3 };
 // Structs
 struct stRoundInfo
 {
-  short roundNumber;
+  short roundNumber = 0;
   enChoices playerChoice;
   enChoices computerChoice;
   enRoundStatus status;
 };
 
+struct stGameStatus
+{
+  short totalRounds = 0;
+  short wins = 0;
+  short losses = 0;
+  short draws = 0;
+  string finalWinner = " ";
+};
 
 // Functions And Procedures
 short readRounds()
@@ -165,55 +173,57 @@ void printRoundStatus(stRoundInfo info)
        << "\033[0m"; // Reset Color
 }
 
-int timesRepeatedInArray(int array[10], int arraySize, int numToCheck)
+stGameStatus roundToGame(stRoundInfo round, stGameStatus game)
 {
-    int repeatition = 0;
-
-    for (int i = 0; i < arraySize; i++)
-    {
-        if (numToCheck == array[i])
-        {
-            repeatition++;
-        }
-    }
-    
-    return repeatition;
-}
-
-char printGameResults(int results[10], short rounds)
-{
-  short wins = timesRepeatedInArray(results, rounds, win);
-  short losses = timesRepeatedInArray(results, rounds, loss);
-  short draws = timesRepeatedInArray(results, rounds, draw);
-
-  string winner = " ";
-
-  char again = ' ';
-
-  if (wins > losses)
+  switch (round.status)
   {
-    winner = "Player";
+  case win:
+    game.wins++;
+    break;
+  
+  case loss:
+    game.losses++;
+    break;
+
+  case draw:
+    game.draws++;
+    break;
+
+  default:
+    break;
   }
 
-  else if (wins < losses)
+  return game;
+}
+
+char printGameResults(stGameStatus game)
+{
+  char again = ' ';
+
+  if (game.wins > game.losses)
   {
-    winner = "Computer";
+    game.finalWinner = "Player";
+  }
+
+  else if (game.wins < game.losses)
+  {
+    game.finalWinner = "Computer";
   }
 
   else
   {
-    winner = "No One";
+    game.finalWinner = "No One";
   }
 
   cout << "\n\t\t_____________________________________________"
        << "\n\t\t\t   +++ G a m e  O v e r +++\t\t"
        << "\n\t\t_____________________________________________"
        << "\n\n\t\t_______________[Game Results]________________"
-       << "\n\t\tGame Rounds : " << rounds
-       << "\n\t\tWins        : " << wins
-       << "\n\t\tLosses      : " << losses
-       << "\n\t\tDraws       : " << draws
-       << "\n\t\tFinal Winner: " << winner
+       << "\n\t\tGame Rounds : " << game.totalRounds
+       << "\n\t\tWins        : " << game.wins
+       << "\n\t\tLosses      : " << game.losses
+       << "\n\t\tDraws       : " << game.draws
+       << "\n\t\tFinal Winner: " << game.finalWinner
        << "\n\t\t_____________________________________________"
        << "\n\t\tDo you want to play again? Y/N: ";
 
@@ -223,29 +233,33 @@ char printGameResults(int results[10], short rounds)
 
 void startGame()
 {
+  stRoundInfo round;
+  stGameStatus game;
+
   int roundsResults[10];
-  short rounds = readRounds();
+  game.totalRounds = readRounds();
+
   char playAgain = ' ';
 
   //enChoices user, computer;
-  stRoundInfo info;
 
-  for (int i = 1; i <= rounds; i++)
+  for (int i = 1; i <= game.totalRounds; i++)
   {
     cout << "\n\nRound [" << i << "] begins: \n";
     
-    info = roundStart(info);
+    round = roundStart(round);
+    game = roundToGame(round, game);
 
-    roundsResults[i - 1] = info.status;
+    roundsResults[i - 1] = round.status;
 
     cout << "\n\t_______________Round [" << i << "]_______________";
 
-    printRoundStatus(info);
+    printRoundStatus(round);
 
     cout << "\n\t______________________________________";
   }
 
-  playAgain = printGameResults(roundsResults, rounds);
+  playAgain = printGameResults(game);
 
   switch (playAgain)
   {
