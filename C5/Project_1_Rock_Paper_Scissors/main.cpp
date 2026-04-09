@@ -236,7 +236,6 @@ void startGame()
   stRoundInfo round;
   stGameStatus game;
 
-  int roundsResults[10];
   game.totalRounds = readRounds();
 
   char playAgain = ' ';
@@ -249,8 +248,6 @@ void startGame()
     
     round = roundStart(round);
     game = roundToGame(round, game);
-
-    roundsResults[i - 1] = round.status;
 
     cout << "\n\t_______________Round [" << i << "]_______________";
 
