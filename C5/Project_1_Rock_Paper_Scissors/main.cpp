@@ -5,8 +5,17 @@ using namespace std;
 
 
 // Enums
-enum enChoices     { rock = 1, paper = 2, scissor = 3 };
-enum enRoundStatus { win = 1 , draw = 2 , loss = 3 };
+enum enChoices     { rock, paper, scissor };
+enum enRoundStatus { win, loss, draw };
+
+
+// Status Matrix
+const enRoundStatus resultMatrix[3][3] = {
+    //Rock          Paper          Scissor
+    { draw,          loss,          win     }, // Rock
+    { win,           draw,          loss    }, // Paper
+    { loss,          win,           draw    }  // Scissor
+};
 
 
 // Structs
@@ -16,7 +25,7 @@ struct stRoundInfo
   enChoices playerChoice;
   enChoices computerChoice;
   enRoundStatus status;
-};
+};  
 
 struct stGameStatus
 {
@@ -25,7 +34,8 @@ struct stGameStatus
   short losses = 0;
   short draws = 0;
   string finalWinner = " ";
-};
+};  
+
 
 // Functions And Procedures
 short readRounds()
@@ -50,14 +60,14 @@ enChoices readChoice()
   cout << "\nEnter Your Choice: [1]Rock, [2]Paper, [3]Scissor : ";
   cin >> choice;
 
-  return static_cast<enChoices>(choice);
+  return static_cast<enChoices>(choice - 1);
 }
 
 enChoices randomChoice()
 {
   int ranNum = rand() % (3 - 1 + 1) + 1;
 
-  return static_cast<enChoices>(ranNum);
+  return static_cast<enChoices>(ranNum - 1);
 }
 
 stRoundInfo roundStart(stRoundInfo info)
@@ -67,40 +77,7 @@ stRoundInfo roundStart(stRoundInfo info)
 
   info.computerChoice = randomChoice();
 
-  if (info.playerChoice == info.computerChoice)
-  {
-    info.status = draw;
-  }
-
-  // Rock Possibilities
-  else if (info.playerChoice == rock && info.computerChoice == paper)
-  {
-    info.status = loss;
-  }
-  else if (info.playerChoice == rock && info.computerChoice == scissor)
-  {
-    info.status = win;
-  }
-
-  // Paper Possibilities  
-  else if (info.playerChoice == paper && info.computerChoice == rock)
-  {
-    info.status = win;
-  }
-  else if (info.playerChoice == paper && info.computerChoice == scissor)
-  {
-    info.status = loss;
-  }
-  
-  // Scissors Possibilities
-  else if (info.playerChoice == scissor && info.computerChoice == rock)
-  {
-    info.status = loss;
-  }
-  else if (info.playerChoice == scissor && info.computerChoice == paper)
-  {
-    info.status = win;
-  }
+  info.status = resultMatrix[info.playerChoice][info.computerChoice];
 
   return info;
 }
@@ -149,7 +126,7 @@ string statusToString(enRoundStatus status)
   }
 }
 
-void printRoundStatus(stRoundInfo info)
+void printRoundStatus(stRoundInfo info, int i)
 {
   // Colors
   if (info.status == draw)
@@ -167,9 +144,11 @@ void printRoundStatus(stRoundInfo info)
     cout << "\033[32m";
   }
 
-  cout << "\n\tPlayer  Choice : " << choicesToString(info.playerChoice)
+  cout << "\n\t_______________Round [" << i << "]_______________"
+       << "\n\tPlayer  Choice : " << choicesToString(info.playerChoice)
        << "\n\tComputer Choice: " << choicesToString(info.computerChoice)
        << "\n\tRound Winner : " << statusToString(info.status)
+       << "\n\t______________________________________"
        << "\033[0m"; // Reset Color
 }
 
@@ -215,7 +194,7 @@ char printGameResults(stGameStatus game)
     game.finalWinner = "No One";
   }
 
-  cout << "\n\t\t_____________________________________________"
+  cout << "\n\n\n\t\t_____________________________________________"
        << "\n\t\t\t   +++ G a m e  O v e r +++\t\t"
        << "\n\t\t_____________________________________________"
        << "\n\n\t\t_______________[Game Results]________________"
@@ -233,14 +212,16 @@ char printGameResults(stGameStatus game)
 
 void startGame()
 {
+  char playAgain = ' ';
+  
+  do
+  {
+    
   stRoundInfo round;
   stGameStatus game;
 
   game.totalRounds = readRounds();
 
-  char playAgain = ' ';
-
-  //enChoices user, computer;
 
   for (int i = 1; i <= game.totalRounds; i++)
   {
@@ -249,24 +230,14 @@ void startGame()
     round = roundStart(round);
     game = roundToGame(round, game);
 
-    cout << "\n\t_______________Round [" << i << "]_______________";
 
-    printRoundStatus(round);
+    printRoundStatus(round, i);
 
-    cout << "\n\t______________________________________";
   }
 
   playAgain = printGameResults(game);
-
-  switch (playAgain)
-  {
-  case 'Y':
-    startGame();
-    break;
   
-  default:
-    break;
-  }
+  } while(playAgain == 'y' || playAgain == 'Y');
 }
 
 int main()
