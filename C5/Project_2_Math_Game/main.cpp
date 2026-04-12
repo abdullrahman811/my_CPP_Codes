@@ -16,10 +16,12 @@ struct stData
     short totalQuestions = 0;
     short correctAnswers = 0;
     short wrongAnswers = 0;
+    short userAnswers[100];
 
     enLevel level;
     enOpType op;
     enResult result;
+    string questions[100];
 };
 
 
@@ -101,6 +103,11 @@ char operation(enOpType newOp)
     return op[newOp];
 }
 
+string problemStoring(int num1, int num2, enOpType op)
+{
+    return to_string(num1) + operation(op) + to_string(num2);
+}
+
 void printGreenText(string text)
 {
     cout << "\033[32m"
@@ -115,7 +122,7 @@ void printRedText(string text)
     << "\033[0m";
 }
 
-void startQuestion(stData &data)
+void startQuestion(stData &data, int i)
 {
     int num1, num2, result, userAns;
 
@@ -134,7 +141,7 @@ void startQuestion(stData &data)
         
     if (newOp == divide)
     {
-        while (num2 == 0) // Keep re-rolling until it's not zero
+        while (num2 == 0)
         {
             num2 = randomNumberLevel(data.level);
         }
@@ -142,11 +149,14 @@ void startQuestion(stData &data)
 
     result = calcMath(num1, num2, newOp);
 
+    data.questions[i - 1] = problemStoring(num1, num2, newOp);
+
     cout << "\n" << num1
          << "\n" << num2 << "  " << operation(newOp)
          << "\n_______________";
     
     userAns = readNumber("\n");
+    data.userAnswers[i - 1] = userAns;
 
     if (userAns == result)
     {
@@ -175,6 +185,26 @@ string levelString(enLevel level)
     return stringLevel[level];
 }
 
+void printHistory(stData data)
+{
+    char history = ' ';
+    cout << "\n\nPrint History? y/n: ";
+    
+    cin >> history;
+
+    if (history == 'y' || history == 'Y')
+    {
+        cout << "\n\n_______________"
+        << "\nHistory: "
+        << "\n_______________";
+        
+        for (int i = 0; i <= data.totalQuestions - 1; i++)
+        {
+            cout << endl << i << ". " << data.questions[i] << " = " << data.userAnswers[i];
+        }        
+    }    
+}
+
 void printResults(stData data)
 {
     cout << "\n____________________"
@@ -184,8 +214,7 @@ void printResults(stData data)
          << "\nLevel: " << levelString(data.level)
          << "\nOperation: " << operationString(data.op)
          << "\nCorrect Answers: " << data.correctAnswers
-         << "\nWrong Answers: " << data.wrongAnswers
-         << "\n\n\t Do You Want To Play Again? Y/n: ";
+         << "\nWrong Answers: " << data.wrongAnswers;
 }
 
 void resetScreen()
@@ -197,14 +226,8 @@ void resetScreen()
   #endif
 }
 
-void startGame()
+void startRound()
 {
-    char again = ' ';
-
-    do
-    {   
-        resetScreen();
-        
         stData data;
         
         data.totalQuestions = readNumber("\nEnter Total Questions: ");
@@ -215,10 +238,24 @@ void startGame()
         {
             cout << "\n\nQuestion [" << i << "/" << data.totalQuestions << "]:";
             
-            startQuestion(data);
+            startQuestion(data, i);
         }
         
         printResults(data);
+        
+        printHistory(data);
+}
+
+void startGame()
+{
+    char again = ' ';
+
+    do
+    {   
+        resetScreen();
+        startRound();
+
+        cout << "\n\n\t Do You Want To Play Again? Y/n: ";
         cin >> again;
         
     } while (again == 'y' || again == 'Y');
