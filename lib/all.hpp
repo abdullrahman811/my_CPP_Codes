@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 namespace all
 {
@@ -44,16 +45,16 @@ namespace all
         return sum;
     }
 
-    inline bool CheckPrime(int Number)
+    inline bool checkPrime(int number)
     {
-        if (Number < 2)
+        if (number < 2)
             return false;
 
-        int M = round(Number / 2);
+        int M = round(number / 2);
 
-        for (int Counter = 2; Counter <= M; Counter++)
+        for (int i = 2; i <= M; i++)
         {
-            if (Number % Counter == 0)
+            if (number % i == 0)
                 return false;
         }
 
