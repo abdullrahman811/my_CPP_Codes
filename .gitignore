@@ -7,6 +7,8 @@
 # 3. Whitelist specific file extensions
 !*.cpp
 !*.md
+!*.hpp
+!*.h
 
 # 4. Specifically allow .gitignore itself
 !.gitignore
