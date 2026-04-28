@@ -1,2 +1,12 @@
-C5/#21_keyGen/main
-C5/#22_RepeatedELementsArray/main
+# 1. Ignore everything by default
+*
+
+# 2. Allow directories so Git can search them
+!*/
+
+# 3. Whitelist specific file extensions
+!*.cpp
+!*.md
+
+# 4. Specifically allow .gitignore itself
+!.gitignore
