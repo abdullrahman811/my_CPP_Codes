@@ -5,12 +5,22 @@
 
 namespace all
 {
-    inline int readNumber(std::string message)
+    inline int readNumber(std::string prompt, std::string failedPrompt)
     {
         int num;
 
-        std::cout << message;
+        std::cout << prompt;
         std::cin >> num;
+
+        while (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << failedPrompt;
+            std::cin >> num;
+        }
+        
 
         return num;
     }
