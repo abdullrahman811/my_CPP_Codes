@@ -12,3 +12,7 @@
 
 # 4. Specifically allow .gitignore itself
 !.gitignore
+
+
+!/CppProperties.json
+./CMakeLists.txt
