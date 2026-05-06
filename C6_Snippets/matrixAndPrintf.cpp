@@ -23,7 +23,6 @@ void printTable(int table[10][10])
     {
         for (int m : arr)
         {
-            setw(3);
             printf(" %0*d", 2, table[n - 1][m - 1]);
         }
 
