@@ -1,7 +1,5 @@
 #include <iostream>
 
-int num = 1;
-
 int printNtoPo(int base, int po) {
     if (po == 0) {
         return 1;
