@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iomanip>
+#include <cstdio>
 using namespace std;
 
 void fillTable(int table[10][10])
