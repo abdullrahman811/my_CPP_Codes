@@ -179,4 +179,11 @@ namespace all
         arraySize++;
         array[arraySize - 1] = numToAdd;
     }
+
+    inline int randomNumber(int from, int to)
+    {
+        int ranNum = rand() % (to - from + 1) + from;
+    
+        return ranNum;
+    }
 }
