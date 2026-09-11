@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -34,4 +35,6 @@ int main()
     
 
     printFirstLetters(readText("\nPlease Enter Text: \n"));
+
+    return 0;
 }
