@@ -2,6 +2,10 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <string>
+#include <limits>
+#include <vector>
 
 namespace all
 {
@@ -186,4 +190,56 @@ namespace all
     
         return ranNum;
     }
+
+    inline std::string readText(std::string prompt)
+    {
+        std::string text;
+
+        std::cout << prompt;
+        std::getline(std::cin, text);
+
+        return text;
+    }
+
+    inline std::string stringLowerCase(std::string text)
+    {
+        for (char &c : text)
+        {
+            c = std::tolower(c);
+        }
+
+        return text;
+    }
+
+    inline std::string stringUpperCase(std::string text)
+    {
+        for (char &c : text)
+        {
+            c = std::toupper(c);
+        }
+
+        return text;
+    }
+
+    inline std::vector <char> vectorFirstLetters(std::string text)
+    {
+        std::vector <char> vLetters;
+
+        bool isFirstLetter = true;
+
+        for (auto &c : text)
+        {
+            if (isFirstLetter && c != ' ')
+            {
+                vLetters.push_back(c);
+
+                isFirstLetter = false;
+            }
+
+            isFirstLetter = (c == ' ') ? true : false;
+        }
+
+        return vLetters;
+    }
+
 }
