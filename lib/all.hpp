@@ -6,10 +6,11 @@
 #include <string>
 #include <limits>
 #include <vector>
+#include <cctype>
 
 namespace all
 {
-    inline int readNumber(std::string prompt, std::string failedPrompt)
+    inline int readNumber(std::string prompt, std::string failedPrompt = "\nNot A Valid Number, Enter Again:\n")
     {
         int num;
 
@@ -64,9 +65,7 @@ namespace all
         if (number < 2)
             return false;
 
-        int M = round(number / 2);
-
-        for (int i = 2; i <= M; i++)
+        for (int i = 2; i * i <= number; i++)
         {
             if (number % i == 0)
                 return false;
@@ -108,14 +107,13 @@ namespace all
         return reversed;
     }
 
-    inline int readPositiveNumber(std::string message)
+    inline int readPositiveNumber(const std::string &message)
     {
         int num = 0;
 
         do
         {
-            std::cout << message << std::endl;
-            std::cin >> num;
+            num = readNumber(message);
         } while (num <= 0);
 
         return num;
@@ -169,7 +167,6 @@ namespace all
             }
         }
 
-        //if loop done without return, then no matches found
         return -1;    
     }
 
@@ -180,6 +177,11 @@ namespace all
 
     inline void addArrayElement(int array[100], int &arraySize, int numToAdd)
     {
+        if (arraySize >= 100)
+        {
+            return ;
+        }
+        
         arraySize++;
         array[arraySize - 1] = numToAdd;
     }
@@ -191,11 +193,12 @@ namespace all
         return ranNum;
     }
 
-    inline std::string readText(std::string prompt)
+    inline std::string readText(const std::string &message)
     {
         std::string text;
 
-        std::cout << prompt;
+        std::cout << message;
+        std::cin >> std::ws;
         std::getline(std::cin, text);
 
         return text;
@@ -205,7 +208,7 @@ namespace all
     {
         for (char &c : text)
         {
-            c = std::tolower(c);
+            c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
         }
 
         return text;
@@ -215,9 +218,46 @@ namespace all
     {
         for (char &c : text)
         {
-            c = std::toupper(c);
+            c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
         }
 
+        return text;
+    }
+
+    inline std::string stringTitleCase(std::string text)
+    {
+        bool isFirstLetter = true;
+
+        for (char &c : text)
+        {
+            if (isFirstLetter && c != ' ')
+            {
+                c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+                isFirstLetter = false;
+            }
+
+            isFirstLetter = (c == ' ') ? true : false;
+        }
+        
+        return text;
+    }
+
+    inline std::string stringNormalCase(std::string text)
+    {
+        bool isFirstLetter = true;
+
+        for (char &c : text)
+        {
+            if (isFirstLetter && c != ' ')
+            {
+                c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+
+                isFirstLetter = false;
+            }
+
+            isFirstLetter = (c == ' ') ? true : false;
+        }
+        
         return text;
     }
 
@@ -227,7 +267,7 @@ namespace all
 
         bool isFirstLetter = true;
 
-        for (auto &c : text)
+        for (char &c : text)
         {
             if (isFirstLetter && c != ' ')
             {
@@ -240,6 +280,23 @@ namespace all
         }
 
         return vLetters;
+    }
+
+    inline char readChar(const std::string &message)
+    {
+        char c;
+
+        std::cout << message;
+        std::cin >> c;
+
+        return c;
+    }
+
+    inline char invertLetterState(char c)
+    {
+        const unsigned char uc = static_cast<unsigned char>(c);
+
+        return (std::isupper(uc)) ? static_cast<char>(std::tolower(uc)) : static_cast<char>(std::toupper(uc));
     }
 
 }
