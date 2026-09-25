@@ -1,4 +1,8 @@
 #pragma once
+// Deprecated, Kept for older codes compatibility, Use "it.hpp" lib instead
+
+
+// Include Section
 
 #include <iostream>
 #include <cmath>
@@ -8,8 +12,17 @@
 #include <vector>
 #include <cctype>
 
+
+// Main Section
+
 namespace all
 {
+    inline void clearCin()
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
     inline int readNumber(std::string prompt, std::string failedPrompt = "\nNot A Valid Number, Enter Again:\n")
     {
         int num;
@@ -19,13 +32,13 @@ namespace all
 
         while (std::cin.fail())
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            clearCin();
 
             std::cout << failedPrompt;
             std::cin >> num;
         }
         
+        clearCin();
 
         return num;
     }
@@ -119,7 +132,6 @@ namespace all
         return num;
     }
 
-
     inline void readArray(int array[100], int &arraySize)
     {
         arraySize = readPositiveNumber("\nEnter Array Elements Number: ");
@@ -128,8 +140,7 @@ namespace all
 
         for (int i = 0; i < arraySize; i++)
         {
-            std::cout << "\n Element [" << i + 1 << "]: ";
-            std::cin >> array[i];
+            array[i] = readNumber("\n Element [" + std::to_string(i + 1) + "]: ");
         }
     }
 
@@ -198,7 +209,7 @@ namespace all
         std::string text;
 
         std::cout << message;
-        std::cin >> std::ws;
+        //std::cin >> std::ws; Removed Due To Cleaning User's Whitespace If Found
         std::getline(std::cin, text);
 
         return text;
