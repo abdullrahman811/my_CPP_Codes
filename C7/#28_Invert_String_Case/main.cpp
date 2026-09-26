@@ -4,7 +4,7 @@
 #include "../../lib/all.hpp"
 
 using namespace std;
-using namespace all;
+
 
 char invertLetterState(char c)
 {
@@ -23,7 +23,7 @@ string invertStringCase(std::string text)
 
 int main()
 {
-    cout << invertStringCase(readText("\nEnter String:\n"));
+    cout << invertStringCase(all::readText("\nEnter String:\n"));
 
     return 0;
 }
