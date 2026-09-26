@@ -377,7 +377,7 @@ namespace it008e
             return text;
         }
         
-        inline std::vector <std::string> splitString(std::string text, std::string delim)
+        inline std::vector <std::string> splitString(std::string text, std::string delim = " ")
         {
             std::vector <std::string> vWords;
             int pos = 0;
