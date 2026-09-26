@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 #include "../../lib/it.hpp"
 
 std::string joinString(const std::vector <std::string> &vWords, const std::string &delim = " ")
