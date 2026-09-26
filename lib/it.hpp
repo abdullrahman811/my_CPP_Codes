@@ -12,7 +12,6 @@ namespace it008e
 {
     namespace IOs
     {
-
         inline void clearCin()
         {
             std::cin.clear();
@@ -229,8 +228,53 @@ namespace it008e
         }
     }
 
+    namespace Chars
+    {
+        inline char invertLetterState(char c)
+        {
+            const unsigned char uc = static_cast<unsigned char>(c);
+
+            return (std::isupper(uc)) ? static_cast<char>(std::tolower(uc)) : static_cast<char>(std::toupper(uc));
+        }
+
+        inline bool isVowel(char letter)
+        {
+            letter = static_cast<unsigned char>(std::tolower(static_cast<unsigned char>(letter)));
+
+            return (letter == 'a' || letter == 'o' || letter == 'u' || letter == 'e' || letter == 'i');
+        }
+    }
+
+
     namespace Strings
     {
+        enum class enTrim{ left, right, both };
+        
+        namespace details
+        {            
+            inline std::string trimStringLeft(std::string text)
+            {
+                for (int i = 0; i < text.length(); i++)
+                {
+                    if (text[i] != ' ')
+                    {
+                        return text.substr(i, text.length() - i);
+                    }
+                }
+        
+                return "";
+            }
+        
+            inline std::string trimStringRight(std::string text)
+            {
+                while (!text.empty() && text.back() == ' ') {
+                    text.pop_back();
+                }
+            
+                return text;
+            }
+        }
+
         inline std::string toLowerCase(std::string text)
         {
             for (char &c : text)
@@ -299,24 +343,85 @@ namespace it008e
                 if (isFirstLetter && c != ' ')
                 {
                     vLetters.push_back(c);
-
+                    
                     isFirstLetter = false;
                 }
 
                 isFirstLetter = (c == ' ') ? true : false;
             }
-
+            
             return vLetters;
         }
-    }
 
-    namespace Chars
-    {
-        inline char invertLetterState(char c)
+        inline unsigned int countVowels(const std::string &text)
         {
-            const unsigned char uc = static_cast<unsigned char>(c);
+            unsigned int count = 0;
+            
+            for (char c : text)
+            {
+                if (Chars::isVowel(c))
+                {
+                    count++;
+                }
+            }
 
-            return (std::isupper(uc)) ? static_cast<char>(std::tolower(uc)) : static_cast<char>(std::toupper(uc));
+            return count;
+        }
+        
+        inline std::string invertStringCase(std::string text)
+        {
+            for (char &c : text)
+            {
+                c = Chars::invertLetterState(c);
+            }
+                        
+            return text;
+        }
+        
+        inline std::vector <std::string> splitString(std::string text, std::string delim)
+        {
+            std::vector <std::string> vWords;
+            int pos = 0;
+            std::string word;
+
+            while ((pos = text.find(delim)) != std::string::npos)
+            {
+                word = text.substr(0, pos);
+
+                text.erase(0, pos + delim.length());
+
+                if (!word.empty())
+                {
+                    vWords.push_back(word);
+                }
+            }
+
+            if (!text.empty())
+            {
+                vWords.push_back(text);
+            }
+            
+            return vWords;
+        }
+
+        inline unsigned int wordCountInString(std::string text)
+        {
+            return static_cast<unsigned int>(splitString(text, " ").size());
+        }
+
+        inline std::string trimString(std::string text, enTrim where)
+        {
+            switch (where)
+            {
+                case enTrim::left:
+                    return details::trimStringLeft(text);
+            
+                case enTrim::right:
+                    return details::trimStringRight(text);
+            
+                default:
+                    return details::trimStringLeft(details::trimStringRight(text));
+            }
         }
     }
 }
