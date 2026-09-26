@@ -245,7 +245,6 @@ namespace it008e
         }
     }
 
-
     namespace Strings
     {
         enum class enTrim{ left, right, both };
@@ -422,6 +421,25 @@ namespace it008e
                 default:
                     return details::trimStringLeft(details::trimStringRight(text));
             }
+        }
+
+        inline std::string joinString(const std::vector <std::string> &vWords, const std::string &delim = " ")
+        {
+            std::string mergedText;
+            bool isFirst = true;
+
+            for (const std::string & s: vWords)
+            {
+                if (!isFirst)
+                    mergedText += delim
+                ;
+                
+                mergedText += s;
+
+                isFirst = false;
+            }
+
+            return mergedText;
         }
     }
 }
