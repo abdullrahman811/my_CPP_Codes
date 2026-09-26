@@ -441,5 +441,24 @@ namespace it008e
 
             return mergedText;
         }
+
+        inline std::string joinString(const std::string words[], unsigned int arrLength, const std::string &delim = " ")
+        {
+            std::string mergedText;
+            bool isFirst = true;
+
+            for (unsigned int i = 0; i < arrLength; i++)
+            {
+                if (!isFirst)
+                    mergedText += delim
+                ;
+                
+                mergedText += words[i];
+            
+                isFirst = false;        
+            }
+
+            return mergedText;
+        }
     }
 }
