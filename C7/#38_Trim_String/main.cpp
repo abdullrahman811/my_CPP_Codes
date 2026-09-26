@@ -6,46 +6,50 @@ enum enTrim{ left, right, both };
 
 std::string trimStringLeft(std::string text)
 {
-  while (!text.empty() && text[0] == ' ') {
-    text.erase(0, 1);
-  }
-  
-  return text;
+	for (int i = 0; i < text.length(); i++)
+	{
+		if (text[i] != ' ')
+		{
+			return text.substr(i, text.length() - i);
+		}
+	}
+
+	return "";
 }
 
 std::string trimStringRight(std::string text)
 {
-  while (!text.empty() && text.back() == ' ') {
-    text.pop_back();
-  }
+	while (!text.empty() && text.back() == ' ') {
+		text.pop_back();
+  	}
   
-  return text;
+  	return text;
 }
 
 std::string trimString(std::string text, enTrim where)
 {
-  switch (where)
-  {
-    case enTrim::left:
-      return trimStringLeft(text);
-      
-    case enTrim::right:
-      return trimStringRight(text);
-      
-    default:
-      return trimStringLeft(trimStringRight(text));
-  }
+	switch (where)
+	{
+		case enTrim::left:
+			return trimStringLeft(text);
+	  
+		case enTrim::right:
+	  		return trimStringRight(text);
+	  
+		default:
+	  		return trimStringLeft(trimStringRight(text));
+  	}
 }
 
 int main()
 {
-  std::string text = all::readText("\nEnter Text:\n");
+	std::string text = all::readText("\nEnter Text:\n");
   
-  std::cout << all::stringTitleCase("\n Text Trimmed From Left Side :") << trimString(text, enTrim::left);
+	std::cout << all::stringTitleCase("\n Text Trimmed From Left Side :") << trimString(text, enTrim::left);
   
-  std::cout << all::stringTitleCase("\n Text Trimmed From Right Side:") << trimString(text, enTrim::right);
+	std::cout << all::stringTitleCase("\n Text Trimmed From Right Side:") << trimString(text, enTrim::right);
   
-  std::cout << all::stringTitleCase("\n Text Trimmed From Both Sides:") << trimString(text, enTrim::both);
+	std::cout << all::stringTitleCase("\n Text Trimmed From Both Sides:") << trimString(text, enTrim::both);
   
-  return 0;
+	return 0;
 }
