@@ -2,8 +2,6 @@
 #include <string>
 #include "../../lib/it.hpp"
 
-using namespace std;
-
 std::string removePunctuations(const std::string &text)
 {
     std::string temp = "";
@@ -23,7 +21,7 @@ int main()
 {
     std::string text = "Hi, I am Ahmad's son.";
 
-    std::cout << endl << text << endl << removePunctuations(text);
+    std::cout << std::endl << text << std::endl << removePunctuations(text);
     
     return 0;
 }
