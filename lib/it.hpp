@@ -272,6 +272,18 @@ namespace it008e
             
                 return text;
             }
+        
+            inline std::vector <std::string> reverseStringVector(const std::vector <std::string> &vString)
+            {
+                std::vector <std::string> vReverse;
+                
+                for (int i = vString.size() - 1; i >= 0; i--)
+                {
+                    vReverse.push_back(vString[i]);
+                }
+                
+                return vReverse;
+        }
         }
 
         inline std::string toLowerCase(std::string text)
@@ -460,5 +472,25 @@ namespace it008e
 
             return mergedText;
         }
+    
+        inline std::string reverseStringWords(const std::string &toReverse)
+        {
+            return it008e::Strings::joinString(details::reverseStringVector(it008e::Strings::splitString(toReverse)));
+        }
+
+        inline std::string replaceWord(std::string text, const std::string &find, const std::string &replace)
+        {
+            std::string tempString = "";
+
+            int pos = 0;
+
+            while ((pos = text.find(find)) != std::string::npos)
+            {
+                tempString = text.replace(pos, find.length(), replace);
+            }
+            
+            return tempString;
+        }
+
     }
 }
