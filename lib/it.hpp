@@ -492,5 +492,19 @@ namespace it008e
             return tempString;
         }
 
+        inline std::string removePunctuations(const std::string &text)
+        {
+            std::string temp = "";
+
+            for (char c : text)
+            {
+                if (!std::ispunct(c))
+                {
+                    temp += c;
+                }
+            }
+            
+            return temp;
+        }
     }
 }
