@@ -18,7 +18,7 @@ namespace it008e
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
 
-        inline int readNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again:\n")
+        inline int readNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
         {
             int num;
 
@@ -38,13 +38,13 @@ namespace it008e
             return num;
         }
 
-        inline int readPositiveNum(const std::string &message)
+        inline int readPositiveNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
         {
             int num = 0;
 
             do
             {
-                num = readNum(message);
+                num = readNum(prompt, failedPrompt);
             } while (num <= 0);
 
             return num;
