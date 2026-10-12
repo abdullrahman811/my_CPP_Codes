@@ -50,6 +50,18 @@ namespace it008e
             return num;
         }
 
+        inline int readNumInRange(const std::string &prompt, const int &from, const int &to, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
+        {
+            int num = 0;
+
+            do
+            {
+                num = readNum(prompt, failedPrompt);
+            } while (!Nums::validateNumInRange(num, from, to));
+            
+            return num;
+        }
+
         inline void readArray(int array[100], int &arraySize)
         {
             arraySize = readPositiveNum("\nEnter Array Elements Number: ");
