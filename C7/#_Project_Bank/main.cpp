@@ -53,7 +53,7 @@ std::string readAccountNum();
 std::vector <stClientData> afterDelete(const std::vector <stClientData> &vData);
 bool overwriteEditedAccount(const stClientData &newData, std::vector <stClientData> &vData);
 stClientData readUpdatedAccount(stClientData oldData);
-stClientData readClientData();
+stClientData readClientData(const std::vector <stClientData> &vData);
 bool appendRecordToFile(const std::string& record, const std::string &filepath);
 bool markToDelete(const std::string &accNum, std::vector <stClientData> &vData);
 
@@ -388,9 +388,9 @@ enMainMenu readMainMenuOption()
 
 bool addClientToFile(const std::string &filepath)
 {
-    stClientData data = readClientData();
-
     std::vector <stClientData> vData = recordsToData(fileToRecords(filepath));
+    
+    stClientData data = readClientData(vData);
     
     if (findAccountInDatas(vData, data, data.accNum))
     {
@@ -402,13 +402,23 @@ bool addClientToFile(const std::string &filepath)
     return appendRecordToFile(dataToRecord(data), filepath);
 }
 
-stClientData readClientData()
+stClientData readClientData(const std::vector <stClientData> &vData)
 {
     stClientData data;
     
-    std::cout << "\nEnter Client Data:";
+    std::cout << "\nAdd New Client";
 
     data.accNum = it008e::IOs::readString("\n\nEnter Account Number: ");
+
+    while (findAccountInDatas(vData, data, data.accNum))
+    {
+        std::cout << "\n\n\tError! Account Number Already Exists.";
+    
+        std::cout << "\n\nEnter Client Data:";
+
+        data.accNum = it008e::IOs::readString("\n\nEnter Account Number: ");
+    }    
+
     data.pin = it008e::IOs::readString("Enter pin: ");
     data.name = it008e::IOs::readString("Enter Name: ");
     data.phone = it008e::IOs::readString("Enter Phone Number: ");
