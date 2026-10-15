@@ -23,7 +23,7 @@ struct stClientData
     
     std::string    phone   = "";
     
-    int            balance = 0;
+    double         balance = 0;
 
     bool           toDelete= false;
 };
@@ -332,7 +332,7 @@ stClientData recordToData(const std::string &record, const std::string &separato
     data.pin = vData[1];
     data.name = vData[2];
     data.phone = vData[3];
-    data.balance = std::stoi(vData[4]);
+    data.balance = std::stod(vData[4]);
     
     return data;
 }
@@ -383,7 +383,7 @@ std::string readAccountNum()
 
 enMainMenu readMainMenuOption()
 {
-    return static_cast<enMainMenu>(it008e::IOs::readPositiveNum("\nEnter Main Menu Option (1 -> 6): "));
+    return static_cast<enMainMenu>(it008e::IOs::readNumInRange("\nEnter Main Menu Option (1 -> 6): ", 1, 6));
 }
 
 bool addClientToFile(const std::string &filepath)
@@ -412,7 +412,7 @@ stClientData readClientData()
     data.pin = it008e::IOs::readString("Enter pin: ");
     data.name = it008e::IOs::readString("Enter Name: ");
     data.phone = it008e::IOs::readString("Enter Phone Number: ");
-    data.balance = it008e::IOs::readNum("Enter Account Balance: ");
+    data.balance = it008e::IOs::readDouble("Enter Account Balance: ");
 
     return data;
 }
@@ -450,7 +450,7 @@ stClientData readUpdatedAccount(stClientData oldData)
     oldData.pin = it008e::IOs::readString("\nEnter pin: ");
     oldData.name = it008e::IOs::readString("\nEnter Name: ");
     oldData.phone = it008e::IOs::readString("\nEnter Phone Number: ");
-    oldData.balance = it008e::IOs::readNum("\nEnter Account Balance: ");
+    oldData.balance = it008e::IOs::readDouble("\nEnter Account Balance: ");
 
     return oldData;
 }
@@ -512,7 +512,7 @@ void printLine(const stClientData &data)
               << "|  " << std::setw(10) << data.pin 
               << "|  " << std::setw(39) << data.name 
               << "|  " << std::setw(15) << data.phone 
-              << "|  " << std::setw(9) << data.balance 
+              << "|  " << std::setw(9) << std::right << std::fixed << std::setprecision(2) << data.balance 
               << "|";
 }
 
