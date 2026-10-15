@@ -10,102 +10,6 @@
 
 namespace it008e
 {
-    namespace IOs
-    {
-        inline void clearCin()
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
-        inline int readNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
-        {
-            int num;
-
-            std::cout << prompt;
-            std::cin >> num;
-
-            while (std::cin.fail())
-            {
-                clearCin();
-
-                std::cout << failedPrompt;
-                std::cin >> num;
-            }
-            
-            clearCin();
-
-            return num;
-        }
-
-        inline int readPositiveNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
-        {
-            int num = 0;
-
-            do
-            {
-                num = readNum(prompt, failedPrompt);
-            } while (num <= 0);
-
-            return num;
-        }
-
-        inline int readNumInRange(const std::string &prompt, const int &from, const int &to, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
-        {
-            int num = 0;
-
-            do
-            {
-                num = readNum(prompt, failedPrompt);
-            } while (!Nums::validateNumInRange(num, from, to));
-            
-            return num;
-        }
-
-        inline void readArray(int array[100], int &arraySize)
-        {
-            arraySize = readPositiveNum("\nEnter Array Elements Number: ");
-        
-            std::cout << "\n Enter array elements:";
-
-            for (int i = 0; i < arraySize; i++)
-            {
-                array[i] = readNum("\n Element [" + std::to_string(i + 1) + "]: ");
-            }
-        }
-
-        inline void printArray(int array[100], int arraySize)
-        {
-        
-            for (int i = 0; i < arraySize; i++)
-            {
-                std::cout << array[i] << " ";
-            }   
-        }
-
-        inline std::string readString(const std::string &message)
-        {
-            std::string text;
-
-            std::cout << message;
-            std::getline(std::cin, text);
-
-            return text;
-        }
-
-        inline char readChar(const std::string &message)
-        {
-            char c;
-
-            std::cout << message;
-            std::cin >> c;
-
-            clearCin();
-
-            return c;
-        }
-    }
-
     namespace Nums
     {
         inline int randomNumber(int from, int to)
@@ -517,6 +421,123 @@ namespace it008e
             }
             
             return temp;
+        }
+    }
+
+    namespace IOs
+    {
+        inline void clearCin()
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
+        inline int readNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
+        {
+            int num;
+
+            std::cout << prompt;
+            std::cin >> num;
+
+            while (std::cin.fail())
+            {
+                clearCin();
+
+                std::cout << failedPrompt;
+                std::cin >> num;
+            }
+            
+            clearCin();
+
+            return num;
+        }
+
+        inline double readDouble(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
+        {
+            double num;
+
+            std::cout << prompt;
+            std::cin >> num;
+
+            while (std::cin.fail())
+            {
+                clearCin();
+
+                std::cout << failedPrompt;
+                std::cin >> num;
+            }
+            
+            clearCin();
+
+            return num;
+        }
+
+
+        inline int readPositiveNum(const std::string &prompt, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
+        {
+            int num = 0;
+
+            do
+            {
+                num = readNum(prompt, failedPrompt);
+            } while (num <= 0);
+
+            return num;
+        }
+
+        inline int readNumInRange(const std::string &prompt, const int &from, const int &to, const std::string &failedPrompt = "\nNot A Valid Number, Enter Again: ")
+        {
+            int num = 0;
+
+            do
+            {
+                num = readNum(prompt, failedPrompt);
+            } while (!Nums::validateNumInRange(num, from, to));
+            
+            return num;
+        }
+
+        inline void readArray(int array[100], int &arraySize)
+        {
+            arraySize = readPositiveNum("\nEnter Array Elements Number: ");
+        
+            std::cout << "\n Enter array elements:";
+
+            for (int i = 0; i < arraySize; i++)
+            {
+                array[i] = readNum("\n Element [" + std::to_string(i + 1) + "]: ");
+            }
+        }
+
+        inline void printArray(int array[100], int arraySize)
+        {
+        
+            for (int i = 0; i < arraySize; i++)
+            {
+                std::cout << array[i] << " ";
+            }   
+        }
+
+        inline std::string readString(const std::string &message)
+        {
+            std::string text;
+
+            std::cout << message;
+            std::getline(std::cin, text);
+
+            return text;
+        }
+
+        inline char readChar(const std::string &message)
+        {
+            char c;
+
+            std::cout << message;
+            std::cin >> c;
+
+            clearCin();
+
+            return c;
         }
     }
 }
